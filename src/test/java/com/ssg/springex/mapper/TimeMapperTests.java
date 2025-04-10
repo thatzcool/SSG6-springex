@@ -11,12 +11,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
 public class TimeMapperTests {
+    @Autowired(required = false)
+    private TimeMapper mapper1;
 
     @Autowired(required = false)
-    private TimeMapper mapper;
+    private TimeMapper2 mapper;
 
     @Test
     public void TimpeMappertest() {
-        log.info(mapper.getTime());
+        log.info(mapper1.getTime());
     }
+
+    @Test
+    public void TimpeMappertest1() {
+         log.info(mapper.getNow());
+    }
+
+
 }

@@ -9,12 +9,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+
 @Log4j2
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations ="file:src/main/webapp/WEB-INF/root-context.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/root-context.xml")
 public class SampleTests {
     @Autowired
     private SampleService sampleService;
+    @Autowired
+    private DataSource dataSource;
 
     @Test
     public void testService() {
@@ -22,8 +27,15 @@ public class SampleTests {
         Assertions.assertNotNull(sampleService);
     }
 
-}
+    @Test
+    public void testConnection() throws Exception {
 
+        Connection connection = dataSource.getConnection();
+        log.info(connection);
+        Assertions.assertNotNull(connection);
+        connection.close();
+    }
+}
 //SampleTests
 //SampleService 멤버 변수로 선언
 //@Autowire 어노테이션 : 스프링에서 사용하는 의존성 주입 어노테이션
